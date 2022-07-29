@@ -3,7 +3,7 @@ from numpy import number
 
 # Create your models here.
 
-class Provider(models.Model):
+class Physician(models.Model):
     ENTITY_CHOICES = [
         ("O", "Organization"),
         ("I", "Individual")
@@ -13,21 +13,21 @@ class Provider(models.Model):
         ("F", "Female")
     ]
 
-    NPI = models.IntegerField(verbose_name="National Provider Identifier")
-    Last_Name = models.CharField(max_length=64)
+    NPI = models.IntegerField(verbose_name="National Physician Identifier")
+    Last_Name_Or_Org = models.CharField(max_length=64)
     First_Name = models.CharField(max_length=64)
     MI = models.CharField(verbose_name="Middle Initial", max_length=8, blank=True)
     Credentials = models.CharField(max_length=128)
     Gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     Entity_Type = models.CharField(max_length=1, choices=ENTITY_CHOICES)
-    Provider_Type = models.CharField(max_length=128)
+    Physician_Type = models.CharField(max_length=128)
     MPI = models.CharField(verbose_name="Medicare Participation Indicator", max_length=8)
 
     def __str__(self):
         return f"{self.Last_Name}, {self.First_Name}"
 
 class Address(models.Model):
-    Provider = models.ForeignKey(to=Provider, null=True, on_delete=models.CASCADE)
+    Physician = models.ForeignKey(to=Physician, null=True, on_delete=models.CASCADE)
     Street_Address_1 = models.CharField(max_length=256)
     Street_Address_2 = models.CharField(max_length=256, blank=True)
     City = models.CharField(max_length=128)
@@ -43,7 +43,7 @@ class Address(models.Model):
 
 
 class BeneficiaryData(models.Model):
-    Provider = models.ForeignKey(to=Provider, null=True, on_delete=models.CASCADE)
+    Physician = models.ForeignKey(to=Physician, null=True, on_delete=models.CASCADE)
     Total_Benes = models.IntegerField(blank=True, null=True)
     Drug_Total_Benes = models.IntegerField(blank=True, null=True)
     Med_Total_Benes = models.IntegerField(blank=True, null=True)
@@ -87,7 +87,7 @@ class Payment(models.Model):
         ("Medical", "Medical")
     ]
 
-    Provider = models.ForeignKey(to=Provider, null=True, on_delete=models.CASCADE)
+    Physician = models.ForeignKey(to=Physician, null=True, on_delete=models.CASCADE)
     Type = models.CharField(max_length=16, choices=PAYMENT_CHOICES, null=True)
     Supressed = models.CharField(max_length=2, null=True, blank=True)
     HCPCS_Codes = models.IntegerField(blank=True, null=True)

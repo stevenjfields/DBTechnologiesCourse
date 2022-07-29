@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from rest_framework import viewsets, mixins, generics
-from .models import BeneficiaryData, Payment, Provider, Address
-from .serializers import AddressSerializer, BeneficiaryDataSerializer, PaymentSerializer, ProviderSerializer
+from .models import BeneficiaryData, Payment, Physician, Address
+from .serializers import AddressSerializer, BeneficiaryDataSerializer, PaymentSerializer, PhysicianSerializer
 from django_filters import rest_framework as filters
 
 # Create your views here.
-class ProviderFilter(filters.FilterSet):
+class PhysicianFilter(filters.FilterSet):
     class Meta:
-        model = Provider
+        model = Physician
         fields = '__all__'
 class AddressFilter(filters.FilterSet):
     class Meta:
@@ -23,10 +23,10 @@ class PaymentFilter(filters.FilterSet):
         model = Payment
         fields = '__all__'
 
-class ProviderViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Provider.objects.all()
-    serializer_class = ProviderSerializer
-    filterset_class = ProviderFilter
+class PhysicianViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Physician.objects.all()
+    serializer_class = PhysicianSerializer
+    filterset_class = PhysicianFilter
 
 class AddressViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Address.objects.all()

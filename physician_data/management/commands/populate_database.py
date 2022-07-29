@@ -4,7 +4,7 @@ from physician_data.models import *
 import pandas as pd
 
 FIELD_GROUPS = {
-    "Providers": [
+    "Physicians": [
         'Rndrng_NPI',
         'Rndrng_Prvdr_Last_Org_Name',
         'Rndrng_Prvdr_First_Name',
@@ -105,7 +105,7 @@ class Command(BaseCommand):
         df = df.fillna(0)
 
         for ind in df.index:
-            p = Provider.objects.create(
+            p = Physician.objects.create(
                 NPI = df['Rndrng_NPI'][ind],
                 Last_Name = df['Rndrng_Prvdr_Last_Org_Name'][ind],
                 First_Name = df['Rndrng_Prvdr_First_Name'][ind],
@@ -113,12 +113,12 @@ class Command(BaseCommand):
                 Credentials = df['Rndrng_Prvdr_Crdntls'][ind],
                 Gender = df['Rndrng_Prvdr_Gndr'][ind],
                 Entity_Type = df['Rndrng_Prvdr_Ent_Cd'][ind],
-                Provider_Type = df['Rndrng_Prvdr_Type'][ind],
+                Physician_Type = df['Rndrng_Prvdr_Type'][ind],
                 MPI = df['Rndrng_Prvdr_Mdcr_Prtcptg_Ind'][ind]
             )
 
             Address.objects.create(
-                Provider = p,
+                Physician = p,
                 Street_Address_1 = df['Rndrng_Prvdr_St1'][ind],
                 Street_Address_2 = df['Rndrng_Prvdr_St2'][ind],
                 City = df['Rndrng_Prvdr_City'][ind],
@@ -131,7 +131,7 @@ class Command(BaseCommand):
             )
 
             BeneficiaryData.objects.create(
-                Provider = p,
+                Physician = p,
                 Total_Benes = df['Tot_Benes'][ind],
                 Drug_Total_Benes = df['Drug_Tot_Benes'][ind],
                 Med_Total_Benes = df['Med_Tot_Benes'][ind],
@@ -170,7 +170,7 @@ class Command(BaseCommand):
             )
 
             Payment.objects.create(
-                Provider = p,
+                Physician = p,
                 Type = 'Total',
                 HCPCS_Codes = df['Tot_HCPCS_Cds'][ind],
                 Services = df['Tot_Srvcs'][ind],
@@ -181,7 +181,7 @@ class Command(BaseCommand):
             )
 
             Payment.objects.create(
-                Provider = p,
+                Physician = p,
                 Type = 'Drug',
                 Supressed = df['Drug_Sprsn_Ind'][ind],
                 HCPCS_Codes = df['Drug_Tot_HCPCS_Cds'][ind],
@@ -193,7 +193,7 @@ class Command(BaseCommand):
             )
 
             Payment.objects.create(
-                Provider = p,
+                Physician = p,
                 Type = "Medical",
                 Supressed = df['Med_Sprsn_Ind'][ind],
                 HCPCS_Codes = df['Med_Tot_HCPCS_Cds'][ind],

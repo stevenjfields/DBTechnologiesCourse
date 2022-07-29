@@ -1,10 +1,10 @@
 from rest_framework import routers, serializers, viewsets
-from .models import BeneficiaryData, Payment, Provider, Address
+from .models import BeneficiaryData, Payment, Physician, Address
 from django_restql.mixins import DynamicFieldsMixin
 
-class ProviderSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
+class PhysicianSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
     class Meta:
-        model = Provider
+        model = Physician
         fields = '__all__'
 
 class AddressSerializer(DynamicFieldsMixin, serializers.ModelSerializer):

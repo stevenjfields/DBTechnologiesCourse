@@ -1,8 +1,8 @@
 from django.contrib import admin
-from physician_data.models import Provider, Address, BeneficiaryData, Payment
+from physician_data.models import Physician, Address, BeneficiaryData, Payment
 
 # Register your models here.
-class ProviderAdmin(admin.ModelAdmin):
+class PhysicianAdmin(admin.ModelAdmin):
     pass
 
 class AddressAdmin(admin.ModelAdmin):
@@ -14,7 +14,7 @@ class BeneficiaryDataAdmin(admin.ModelAdmin):
 class PaymentAdmin(admin.ModelAdmin):
     pass
 
-admin.site.register(Provider, ProviderAdmin)
+admin.site.register(Physician, PhysicianAdmin)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(BeneficiaryData, BeneficiaryDataAdmin)
 admin.site.register(Payment, PaymentAdmin)
