@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-@w3gnp6fd*g2^!7hrimicn0jcm3yqmbm@x_y)%k!e*w$nw$m3p
 DEBUG = False
 
 ALLOWED_HOSTS = ["test-django-sfields.herokuapp.com", "127.0.0.1"]
-CSRF_TRUSTED_ORIGINS = ["test-django-sfields.herokuapp.com"]
+CSRF_TRUSTED_ORIGINS = ["https://test-django-sfields.herokuapp.com"]
 
 # Application definition
 
