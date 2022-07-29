@@ -107,7 +107,7 @@ class Command(BaseCommand):
         for ind in df.index:
             p = Physician.objects.create(
                 NPI = df['Rndrng_NPI'][ind],
-                Last_Name = df['Rndrng_Prvdr_Last_Org_Name'][ind],
+                Last_Name_Or_Org = df['Rndrng_Prvdr_Last_Org_Name'][ind],
                 First_Name = df['Rndrng_Prvdr_First_Name'][ind],
                 MI = df['Rndrng_Prvdr_MI'][ind],
                 Credentials = df['Rndrng_Prvdr_Crdntls'][ind],
@@ -204,5 +204,9 @@ class Command(BaseCommand):
                 Mdcr_Stdzd_Amt = df['Med_Mdcr_Stdzd_Amt'][ind],
             )
 
-            print(f"Successfully created Physician {p}")
+            if ind % 100 == 0 and ind != 0:
+                print(f"Successfully created {ind} physicians")
+            
+            if ind % 10000 == 0 and ind != 0:
+                return
         return super().handle(*args, **options)

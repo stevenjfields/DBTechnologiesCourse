@@ -27,7 +27,7 @@ class Physician(models.Model):
         return f"{self.Last_Name}, {self.First_Name}"
 
 class Address(models.Model):
-    Physician = models.ForeignKey(to=Physician, null=True, on_delete=models.CASCADE)
+    Physician = models.ForeignKey(to=Physician, null=True, related_name='address', on_delete=models.CASCADE)
     Street_Address_1 = models.CharField(max_length=256)
     Street_Address_2 = models.CharField(max_length=256, blank=True)
     City = models.CharField(max_length=128)
@@ -43,7 +43,7 @@ class Address(models.Model):
 
 
 class BeneficiaryData(models.Model):
-    Physician = models.ForeignKey(to=Physician, null=True, on_delete=models.CASCADE)
+    Physician = models.ForeignKey(to=Physician, null=True, related_name='beneficiary_data', on_delete=models.CASCADE)
     Total_Benes = models.IntegerField(blank=True, null=True)
     Drug_Total_Benes = models.IntegerField(blank=True, null=True)
     Med_Total_Benes = models.IntegerField(blank=True, null=True)
@@ -87,7 +87,7 @@ class Payment(models.Model):
         ("Medical", "Medical")
     ]
 
-    Physician = models.ForeignKey(to=Physician, null=True, on_delete=models.CASCADE)
+    Physician = models.ForeignKey(to=Physician, null=True, related_name='payments', on_delete=models.CASCADE)
     Type = models.CharField(max_length=16, choices=PAYMENT_CHOICES, null=True)
     Supressed = models.CharField(max_length=2, null=True, blank=True)
     HCPCS_Codes = models.IntegerField(blank=True, null=True)

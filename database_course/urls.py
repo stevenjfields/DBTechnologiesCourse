@@ -19,7 +19,7 @@ from rest_framework import routers
 from physician_data.views import *
 
 router = routers.DefaultRouter()
-router.register('providers', ProviderViewSet)
+router.register('physician', PhysicianViewSet)
 router.register('address', AddressViewSet)
 router.register('beneficiary', BeneficiaryViewSet)
 router.register('payment', PaymentViewSet)
