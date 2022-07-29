@@ -24,7 +24,7 @@ class Physician(models.Model):
     MPI = models.CharField(verbose_name="Medicare Participation Indicator", max_length=8)
 
     def __str__(self):
-        return f"{self.Last_Name}, {self.First_Name}"
+        return f"{self.Last_Name_Or_Org}, {self.First_Name}"
 
 class Address(models.Model):
     Physician = models.ForeignKey(to=Physician, null=True, related_name='address', on_delete=models.CASCADE)
