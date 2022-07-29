@@ -1,5 +1,4 @@
 from django.db import models
-from numpy import number
 
 # Create your models here.
 
@@ -15,13 +14,13 @@ class Physician(models.Model):
 
     NPI = models.IntegerField(verbose_name="National Physician Identifier")
     Last_Name_Or_Org = models.CharField(max_length=64)
-    First_Name = models.CharField(max_length=64)
-    MI = models.CharField(verbose_name="Middle Initial", max_length=8, blank=True)
-    Credentials = models.CharField(max_length=128)
-    Gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    Entity_Type = models.CharField(max_length=1, choices=ENTITY_CHOICES)
-    Physician_Type = models.CharField(max_length=128)
-    MPI = models.CharField(verbose_name="Medicare Participation Indicator", max_length=8)
+    First_Name = models.CharField(max_length=64, null=True)
+    MI = models.CharField(verbose_name="Middle Initial", max_length=8, blank=True, null=True)
+    Credentials = models.CharField(max_length=128, null=True)
+    Gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True)
+    Entity_Type = models.CharField(max_length=1, choices=ENTITY_CHOICES, null=True)
+    Physician_Type = models.CharField(max_length=128, null=True)
+    MPI = models.CharField(verbose_name="Medicare Participation Indicator", max_length=8, null=True)
 
     def __str__(self):
         return f"{self.Last_Name_Or_Org}, {self.First_Name}"
@@ -29,13 +28,13 @@ class Physician(models.Model):
 class Address(models.Model):
     Physician = models.ForeignKey(to=Physician, null=True, related_name='address', on_delete=models.CASCADE)
     Street_Address_1 = models.CharField(max_length=256)
-    Street_Address_2 = models.CharField(max_length=256, blank=True)
+    Street_Address_2 = models.CharField(max_length=256, blank=True, null=True)
     City = models.CharField(max_length=128)
     State = models.CharField(max_length=2)
     State_FIPS = models.CharField(max_length=4)
     Zip5 = models.CharField(max_length=5)
-    RUCA = models.IntegerField()
-    RUCA_Desc = models.CharField(max_length=256)
+    RUCA = models.IntegerField(null=True)
+    RUCA_Desc = models.CharField(max_length=256, null=True)
     Country = models.CharField(max_length=64)
 
     def __str__(self):
