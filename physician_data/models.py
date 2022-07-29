@@ -20,6 +20,7 @@ class Provider(models.Model):
     Credentials = models.CharField(max_length=128)
     Gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     Entity_Type = models.CharField(max_length=1, choices=ENTITY_CHOICES)
+    Provider_Type = models.CharField(max_length=128)
     MPI = models.CharField(verbose_name="Medicare Participation Indicator", max_length=8)
 
     def __str__(self):
@@ -31,7 +32,10 @@ class Address(models.Model):
     Street_Address_2 = models.CharField(max_length=256, blank=True)
     City = models.CharField(max_length=128)
     State = models.CharField(max_length=2)
+    State_FIPS = models.CharField(max_length=4)
     Zip5 = models.CharField(max_length=5)
+    RUCA = models.IntegerField()
+    RUCA_Desc = models.CharField(max_length=256)
     Country = models.CharField(max_length=64)
 
     def __str__(self):
@@ -85,6 +89,7 @@ class Payment(models.Model):
 
     Provider = models.ForeignKey(to=Provider, null=True, on_delete=models.CASCADE)
     Type = models.CharField(max_length=16, choices=PAYMENT_CHOICES, null=True)
+    Supressed = models.CharField(max_length=2, null=True, blank=True)
     HCPCS_Codes = models.IntegerField(blank=True, null=True)
     Services = models.IntegerField(blank=True, null=True)
     Submitted_Charges = models.FloatField(blank=True, null=True)
